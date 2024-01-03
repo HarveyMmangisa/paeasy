@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ listing.name}}{% endblock%}
+
+{% block content %}
+<div class="grid grid-cols-5 gap-6">
+    <div class ="col-span-3">
+        <img src= "{{ listing.image.url }}"  class = "rounded-xl">
+    </div>
+
+<div class = "col-span-2 p-10 bg-teal-900 rounded-xl">
+    <h1 class ="mb-6 text-white text-6xl">{{ listing.name }}</h1>
+    <p class = "text-white"><strong> Price: </strong>{{listing.price}}</p>
+    <p class = "text-white"><strong> Category: </strong>{{listing.category}}</p>
+    <p class = "text-white"><strong> Seller: </strong>{{ listing.created_by.username}}</p>
+    {% if listing.description %}
+    <p class = "text-white">
+        <strong class="text-white"> Description:</strong><br>
+        {{listing.description}}
+    </p>
+    {% endif%}
+    <a href = "#" class =" inline-block mt-6 px-6 py-3 text-lg font-semibold bg-gray-900 text-white rounded-xl hover:bg-gray- 800">Contact Seller</a>
+</div>
+</div>
+    
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center"> Related Listing</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for listing in related_listings %}
+            <div>
+                 <a href="{% url 'listing:detail' listing.id %}">
+                    <div>
+                        <img src="{{ listing.image.url }}" class="rounded-t-xl">
+                    </div>
+                    <div class="p-6 bg-teal  rounded-b-xl">
+                        <h2 class="text-2xl">{{ listing.name }}</h2>
+                        <p class="text-gray-500">Price: {{ listing.price | safe }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock%}
